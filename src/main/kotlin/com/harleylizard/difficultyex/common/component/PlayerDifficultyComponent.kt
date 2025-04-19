@@ -1,9 +1,11 @@
 package com.harleylizard.difficultyex.common.component
 
+import com.harleylizard.difficultyex.common.DifficultyExConfig
+import com.harleylizard.difficultyex.common.DifficultyMode
 import net.minecraft.nbt.CompoundTag
 
 class PlayerDifficultyComponent : HasDifficulty {
-    override val enabled get() = false
+    override val enabled get() = DifficultyExConfig.config.mode == DifficultyMode.PLAYER
 
     override fun readFromNbt(p0: CompoundTag) {
         TODO("Not yet implemented")

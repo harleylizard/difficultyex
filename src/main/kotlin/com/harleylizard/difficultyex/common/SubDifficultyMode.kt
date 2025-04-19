@@ -1,15 +1,13 @@
 package com.harleylizard.difficultyex.common
 
-enum class DifficultyMode {
-    PLAYER,
+enum class SubDifficultyMode {
     LEVEL,
-    DISTANCE;
+    AGE;
 
     companion object {
         val map = EnumMap.enumMapOf(
-            PLAYER to "player",
             LEVEL to "level",
-            DISTANCE to "distance")
+            AGE to "age")
 
     }
 }

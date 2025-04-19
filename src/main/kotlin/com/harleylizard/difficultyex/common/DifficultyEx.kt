@@ -6,6 +6,7 @@ import net.minecraft.resources.ResourceLocation
 class DifficultyEx : ModInitializer {
 
     override fun onInitialize() {
+        DifficultyExConfig.config
     }
 
     companion object {

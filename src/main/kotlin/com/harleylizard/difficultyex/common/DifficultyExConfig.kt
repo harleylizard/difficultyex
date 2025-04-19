@@ -1,16 +1,27 @@
 package com.harleylizard.difficultyex.common
 
 import com.google.gson.GsonBuilder
+import com.google.gson.annotations.SerializedName
+import net.fabricmc.loader.api.FabricLoader
 import java.nio.file.Files
 import java.nio.file.Path
 
 class DifficultyExConfig {
     val mode = DifficultyMode.PLAYER
 
-    companion object {
+    @SerializedName("sub_mode")
+    val subMode = SubDifficultyMode.AGE
 
-        fun configOf(path: Path): DifficultyExConfig {
-            val gson = GsonBuilder().create()
+    companion object {
+        val config = configOf(FabricLoader.getInstance().configDir.resolve("difficultyex.json"))
+
+        private fun configOf(path: Path): DifficultyExConfig {
+            val gson = GsonBuilder()
+                .setPrettyPrinting()
+                .registerTypeAdapter(DifficultyMode::class.java, DifficultyMode.map)
+                .registerTypeAdapter(SubDifficultyMode::class.java, SubDifficultyMode.map)
+                .create()
+
             return path.takeIf(Files::isRegularFile)?.let {
                 Files.newBufferedReader(path).use { reader ->
                     gson.fromJson(reader, DifficultyExConfig::class.java)
