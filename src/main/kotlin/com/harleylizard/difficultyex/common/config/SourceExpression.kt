@@ -11,7 +11,13 @@ import java.lang.reflect.Type
 class SourceExpression private constructor(private val source: String) {
     val expression: Expression = ExpressionBuilder(source).build()
 
+    val empty get() = source == ZERO
+
     companion object {
+        private const val ZERO = "0.0"
+
+        val empty = SourceExpression(ZERO)
+
         val serialiser = object : Serialiser<SourceExpression> {
             override fun deserialize(p0: JsonElement, p1: Type, p2: JsonDeserializationContext) = SourceExpression(p0.asJsonPrimitive.asString)
 

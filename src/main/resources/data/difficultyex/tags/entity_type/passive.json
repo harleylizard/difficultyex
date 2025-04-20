@@ -1,0 +1,14 @@
+{
+  "values": [
+    "minecraft:sheep",
+    "minecraft:cow",
+    "minecraft:mooshroom",
+    "minecraft:pig",
+    "minecraft:chicken",
+    "minecraft:rabbit",
+    "minecraft:bat",
+    "minecraft:squid",
+    "minecraft:horse",
+    "minecraft:villager"
+  ]
+}
