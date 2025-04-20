@@ -1,13 +1,13 @@
-package com.harleylizard.difficultyex.common
+package com.harleylizard.difficultyex.common.config
 
-import com.google.gson.*
+import com.google.gson.JsonDeserializationContext
+import com.google.gson.JsonElement
+import com.google.gson.JsonPrimitive
+import com.google.gson.JsonSerializationContext
 import java.lang.reflect.Type
-import java.util.Collections
+import java.util.*
 
-class EnumMap<T : Enum<T>> private constructor(private val map: Map<T, String>) :
-    JsonDeserializer<T>,
-    JsonSerializer<T> {
-
+class EnumSerialiser<T : Enum<T>> private constructor(private val map: Map<T, String>) : Serialiser<T> {
     private val inverse = map.inverse
 
     override fun deserialize(p0: JsonElement, p1: Type, p2: JsonDeserializationContext): T {
@@ -21,7 +21,7 @@ class EnumMap<T : Enum<T>> private constructor(private val map: Map<T, String>) 
     companion object {
         private val <K, V> Map<K, V>.inverse get() = entries.associate { (key, value) -> value to key }
 
-        fun <T : Enum<T>> enumMapOf(vararg pairs: Pair<T, String>) = EnumMap(Collections.unmodifiableMap(mapOf(*pairs)))
+        fun <T : Enum<T>> enumSerialiserOf(vararg pairs: Pair<T, String>) = EnumSerialiser(Collections.unmodifiableMap(mapOf(*pairs)))
 
     }
 }

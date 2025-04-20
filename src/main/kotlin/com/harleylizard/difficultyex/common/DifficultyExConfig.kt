@@ -2,6 +2,10 @@ package com.harleylizard.difficultyex.common
 
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.SerializedName
+import com.harleylizard.difficultyex.common.config.DifficultyMode
+import com.harleylizard.difficultyex.common.config.Scaling
+import com.harleylizard.difficultyex.common.config.SourceExpression
+import com.harleylizard.difficultyex.common.config.SubDifficultyMode
 import net.fabricmc.loader.api.FabricLoader
 import java.nio.file.Files
 import java.nio.file.Path
@@ -18,8 +22,10 @@ class DifficultyExConfig {
         private fun configOf(path: Path): DifficultyExConfig {
             val gson = GsonBuilder()
                 .setPrettyPrinting()
-                .registerTypeAdapter(DifficultyMode::class.java, DifficultyMode.map)
-                .registerTypeAdapter(SubDifficultyMode::class.java, SubDifficultyMode.map)
+                .registerTypeAdapter(DifficultyMode::class.java, DifficultyMode.serialiser)
+                .registerTypeAdapter(SubDifficultyMode::class.java, SubDifficultyMode.serialiser)
+                .registerTypeAdapter(SourceExpression::class.java, SourceExpression.serialiser)
+                .registerTypeAdapter(Scaling::class.java, Scaling.serialiser)
                 .create()
 
             return path.takeIf(Files::isRegularFile)?.let {

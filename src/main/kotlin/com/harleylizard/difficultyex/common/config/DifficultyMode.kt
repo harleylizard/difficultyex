@@ -1,4 +1,4 @@
-package com.harleylizard.difficultyex.common
+package com.harleylizard.difficultyex.common.config
 
 enum class DifficultyMode {
     PLAYER,
@@ -6,10 +6,11 @@ enum class DifficultyMode {
     DISTANCE;
 
     companion object {
-        val map = EnumMap.enumMapOf(
+        val serialiser = EnumSerialiser.enumSerialiserOf(
             PLAYER to "player",
             LEVEL to "level",
-            DISTANCE to "distance")
+            DISTANCE to "distance"
+        )
 
     }
 }

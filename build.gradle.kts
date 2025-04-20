@@ -12,19 +12,26 @@ repositories {
     mavenCentral()
     exclusiveMaven("https://maven.ladysnake.org/releases", "dev.onyxstudios.cardinal-components-api")
     exclusiveMaven("https://api.modrinth.com/maven", "maven.modrinth")
+
+    //maven("https://maven.wispforest.io/releases/")
 }
 
 dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 
-    snail {
-        implementation("dev.onyxstudios.cardinal-components-api:cardinal-components-base:5.2.3").include
-        implementation("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:5.2.3").include
-        implementation("dev.onyxstudios.cardinal-components-api:cardinal-components-level:5.2.3").include
-        implementation("dev.onyxstudios.cardinal-components-api:cardinal-components-world:5.2.3").include
+    implementation("net.objecthunter:exp4j:0.4.8")
 
-        implementation("maven.modrinth:playerex-directors-cut:4.0.2+1.20.1")
+    snail {
+        val components = "5.2.3"
+        implementation("dev.onyxstudios.cardinal-components-api:cardinal-components-base:$components")
+        implementation("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:$components")
+        implementation("dev.onyxstudios.cardinal-components-api:cardinal-components-level:$components")
+        implementation("dev.onyxstudios.cardinal-components-api:cardinal-components-world:$components")
+
+        //implementation("io.wispforest:owo-lib:0.11.2+1.20")
+
+        //implementation("maven.modrinth:playerex-directors-cut:4.0.2+1.20.1")
     }
 }
 
