@@ -11,6 +11,7 @@ version = "1.0-SNAPSHOT"
 repositories {
     mavenCentral()
     exclusiveMaven("https://maven.ladysnake.org/releases", "dev.onyxstudios.cardinal-components-api")
+    exclusiveMaven("https://api.modrinth.com/maven", "maven.modrinth")
 }
 
 dependencies {
@@ -22,6 +23,8 @@ dependencies {
         implementation("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:5.2.3").include
         implementation("dev.onyxstudios.cardinal-components-api:cardinal-components-level:5.2.3").include
         implementation("dev.onyxstudios.cardinal-components-api:cardinal-components-world:5.2.3").include
+
+        implementation("maven.modrinth:playerex-directors-cut:4.0.2+1.20.1")
     }
 }
 
@@ -36,6 +39,7 @@ snail {
         version = "1.0-SNAPSHOT"
         description = "scaling difficulty"
         license = "MIT"
+        mixins = listOf("difficultyex.mixins.json")
         entryPoints {
             main = listOf("com.harleylizard.difficultyex.common.DifficultyEx")
             client = listOf("com.harleylizard.difficultyex.client.DifficultyExClient")
