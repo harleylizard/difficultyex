@@ -12,8 +12,7 @@ repositories {
     mavenCentral()
     exclusiveMaven("https://maven.ladysnake.org/releases", "dev.onyxstudios.cardinal-components-api")
     exclusiveMaven("https://api.modrinth.com/maven", "maven.modrinth")
-
-    //maven("https://maven.wispforest.io/releases/")
+    maven("https://maven.wispforest.io/releases/")
 }
 
 dependencies {
@@ -29,9 +28,17 @@ dependencies {
         implementation("dev.onyxstudios.cardinal-components-api:cardinal-components-level:$components")
         implementation("dev.onyxstudios.cardinal-components-api:cardinal-components-world:$components")
 
-        //implementation("io.wispforest:owo-lib:0.11.2+1.20")
+        implementation("io.wispforest:owo-lib:0.11.2+1.20")
+        implementation("io.wispforest:endec:0.1.7")
+        implementation("io.wispforest.endec:netty:0.1.3")
 
-        //implementation("maven.modrinth:playerex-directors-cut:4.0.2+1.20.1")
+        implementation("maven.modrinth:playerex-directors-cut:4.0.2+1.20.1")
+        implementation("maven.modrinth:data-attributes-directors-cut:2.0.3+1.20.1-fabric")
+        implementation("maven.modrinth:ranged-weapon-api:1.1.4+1.20.1")
+        implementation("maven.modrinth:modmenu:7.2.2")
+        implementation("maven.modrinth:additionalentityattributes:1.7.6+1.20.1")
+        implementation("maven.modrinth:opc-directors-cut:2.0.0+1.20.1-beta.4-fabric")
+        implementation("maven.modrinth:placeholder-api:2.1.4+1.20.1")
     }
 }
 
