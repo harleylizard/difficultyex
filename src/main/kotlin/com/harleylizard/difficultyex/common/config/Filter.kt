@@ -16,10 +16,14 @@ class Filter private constructor(
     private val types: List<EntityType<out Entity>>,
     private val tags: List<TagKey<EntityType<out Entity>>>) {
 
-    operator fun contains(entity: Entity) = types.any { entity `is` it } || tags.any { entity `is` it }
+    val entityTypes get() = BuiltInRegistries.ENTITY_TYPE.filter { tags.any { tag -> it.`is`(tag) } } + types
+
+    operator fun contains(entity: Entity) = entity.type in types || tags.any { entity `is` it }
+
+    operator fun contains(type: EntityType<out Entity>) = type in types || tags.any { type.`is`(it) }
 
     companion object {
-        private infix fun Entity.`is`(type: EntityType<out Entity>) = this.type == type
+        val empty = Filter(emptyList(), emptyList())
 
         private infix fun Entity.`is`(tag: TagKey<EntityType<out Entity>>) = type.`is`(tag)
 

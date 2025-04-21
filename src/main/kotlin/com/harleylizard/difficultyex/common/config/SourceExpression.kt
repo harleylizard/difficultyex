@@ -4,12 +4,12 @@ import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonElement
 import com.google.gson.JsonPrimitive
 import com.google.gson.JsonSerializationContext
-import net.objecthunter.exp4j.Expression
+import com.harleylizard.difficultyex.common.DifficultyExConfig
 import net.objecthunter.exp4j.ExpressionBuilder
 import java.lang.reflect.Type
 
 class SourceExpression private constructor(private val source: String) {
-    val expression: Expression = ExpressionBuilder(source).build()
+    val expression get() = DifficultyExConfig.config.variables.invoke(ExpressionBuilder(source)).build()
 
     val empty get() = source == ZERO
 
