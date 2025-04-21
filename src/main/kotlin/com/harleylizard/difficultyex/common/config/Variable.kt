@@ -2,6 +2,7 @@ package com.harleylizard.difficultyex.common.config
 
 import com.google.gson.*
 import com.harleylizard.difficultyex.common.config.AttributeVariable.Companion.variable
+import com.harleylizard.difficultyex.common.config.ConstVariable.Companion.variable
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.LivingEntity
@@ -21,7 +22,7 @@ sealed interface Variable {
                 val value = `object`.getAsJsonPrimitive("value")
 
                 return when (source) {
-                    "const" -> ConstVariable(value.asDouble)
+                    "const" -> value.asDouble.variable
                     "entity_attribute" -> (BuiltInRegistries.ATTRIBUTE.get(ResourceLocation(value.asString)) ?: throw RuntimeException("Unknown attribute")).variable
                     else -> throw RuntimeException("")
                 }
@@ -29,7 +30,7 @@ sealed interface Variable {
 
             override fun serialize(p0: Variable, p1: Type, p2: JsonSerializationContext): JsonElement {
                 return when (p0) {
-                    is ConstVariable -> { p2.serialize(p1, ConstVariable::class.java) }
+                    is ConstVariable -> { p2.serialize(p0, ConstVariable::class.java) }
                     is AttributeVariable -> { p2.serialize(p0, AttributeVariable::class.java) }
                 }
             }
@@ -37,11 +38,13 @@ sealed interface Variable {
     }
 }
 
-class ConstVariable(private val value: Double) : Variable {
+class ConstVariable private constructor(private val value: Double) : Variable {
 
     override fun invoke(entity: LivingEntity) = value
 
     companion object {
+        val Double.variable get() = ConstVariable(this)
+
         val serialiser = JsonSerializer<ConstVariable> { p0, p1, p2 ->
             val `object` = JsonObject()
             `object`.addProperty("source", "const")

@@ -4,6 +4,7 @@ import com.google.gson.GsonBuilder
 import com.google.gson.annotations.SerializedName
 import com.harleylizard.difficultyex.common.config.*
 import com.harleylizard.difficultyex.common.config.AttributeVariable.Companion.variable
+import com.harleylizard.difficultyex.common.config.ConstVariable.Companion.variable
 import com.harleylizard.difficultyex.common.config.EntityLevels.Companion.levelOf
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.tags.EntityTypeTags
@@ -25,6 +26,7 @@ class DifficultyExConfig {
     val scaleBlacklist = Filter.filterOf(DifficultyExEntityTags.passive)
 
     val variables = Variables.variablesOf(
+        "level" to 5.0.variable,
         "max_health" to Attributes.MAX_HEALTH.variable,
         "armor" to Attributes.ARMOR.variable,
         "armor_toughness" to Attributes.ARMOR_TOUGHNESS.variable
