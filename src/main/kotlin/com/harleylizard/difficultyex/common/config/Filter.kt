@@ -22,6 +22,16 @@ class Filter private constructor(
 
     operator fun contains(type: EntityType<out Entity>) = type in types || tags.any { type.`is`(it) }
 
+    operator fun minus(filter: Filter): Filter {
+        val left: MutableList<EntityType<out Entity>> = ArrayList(types)
+        val right: MutableList<TagKey<EntityType<out Entity>>> = ArrayList(tags)
+        left.removeAll(filter.types)
+        right.removeAll(filter.tags)
+        return Filter(
+            Collections.unmodifiableList(left),
+            Collections.unmodifiableList(right))
+    }
+
     companion object {
         val empty = Filter(emptyList(), emptyList())
 

@@ -10,7 +10,8 @@ class DifficultyEx : ModInitializer {
         DifficultyExEntityTags.init()
 
         ServerWorldEvents.LOAD.register { server, level ->
-            DifficultyExConfig.config
+            Configs.leveling.get()
+            Configs.attributes.get()
         }
 
     }

@@ -4,6 +4,8 @@ import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.google.gson.JsonSerializationContext
+import com.harleylizard.difficultyex.common.config.SourceExpression.Companion.expression
+import com.harleylizard.difficultyex.common.config.variable.Variables
 import net.minecraft.util.Mth
 import java.lang.reflect.Type
 
@@ -12,7 +14,7 @@ class Scaling private constructor(
     private val max: Double,
     private val source: SourceExpression) {
 
-    fun eval(query: Query) = query(source.expression).evaluate().clamp(min, max)
+    fun eval(variables: Variables, query: Query) = query(source.expression(variables)).evaluate().clamp(min, max)
 
     companion object {
         val IntRange.scaling get() = Scaling(
@@ -25,8 +27,8 @@ class Scaling private constructor(
 
             override fun deserialize(p0: JsonElement, p1: Type, p2: JsonDeserializationContext): Scaling {
                 val `object` = p0.asJsonObject
-                val source = if (`object`.has("scaling"))
-                    p2.deserialize(`object`.get("scaling"), SourceExpression::class.java) else SourceExpression.empty
+                val source = if (`object`.has("expression"))
+                    p2.deserialize(`object`.get("expression"), SourceExpression::class.java) else SourceExpression.empty
                 return Scaling(
                     `object`.getAsJsonPrimitive("min").asDouble,
                     `object`.getAsJsonPrimitive("max").asDouble,
@@ -38,11 +40,17 @@ class Scaling private constructor(
                 `object`.addProperty("min", p0.min)
                 `object`.addProperty("max", p0.max)
                 p0.source.takeUnless { it.empty }?.let {
-                    `object`.add("scaling", p2.serialize(p0.source))
+                    `object`.add("expression", p2.serialize(p0.source))
                 }
                 return `object`
             }
         }
+
+        fun IntRange.scalingOf(expression: String) = Scaling(
+            first.coerceAtMost(last).toDouble(),
+            first.coerceAtLeast(last).toDouble(),
+            expression.expression
+        )
 
     }
 }

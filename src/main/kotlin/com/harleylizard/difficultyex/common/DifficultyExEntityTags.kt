@@ -12,7 +12,5 @@ object DifficultyExEntityTags {
     val passive = "passive".tag
 
     fun init() {
-
     }
-
 }

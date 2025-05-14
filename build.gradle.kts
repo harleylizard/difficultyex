@@ -10,6 +10,8 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
+    mavenLocal()
+
     exclusiveMaven("https://maven.ladysnake.org/releases", "dev.onyxstudios.cardinal-components-api")
     exclusiveMaven("https://api.modrinth.com/maven", "maven.modrinth")
     maven("https://maven.wispforest.io/releases/")
@@ -27,6 +29,7 @@ dependencies {
         implementation("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:$components")
         implementation("dev.onyxstudios.cardinal-components-api:cardinal-components-level:$components")
         implementation("dev.onyxstudios.cardinal-components-api:cardinal-components-world:$components")
+        implementation("dev.onyxstudios.cardinal-components-api:cardinal-components-chunk:$components")
 
         implementation("io.wispforest:owo-lib:0.11.2+1.20")
         implementation("io.wispforest:endec:0.1.7")
@@ -57,11 +60,11 @@ snail {
         entryPoints {
             main = listOf("com.harleylizard.difficultyex.common.DifficultyEx")
             client = listOf("com.harleylizard.difficultyex.client.DifficultyExClient")
+            named("cardinal-components").set(listOf("com.harleylizard.difficultyex.common.DifficultyExComponents"))
         }
         custom {
             it["cardinal-components"].addAll(listOf(
-                "difficultyex:level_difficulty",
-                "difficultyex:player_difficulty"))
+                "difficultyex:entity_level"))
         }
     }
 }
