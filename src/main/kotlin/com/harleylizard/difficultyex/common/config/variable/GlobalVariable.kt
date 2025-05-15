@@ -17,6 +17,7 @@ class GlobalVariable private constructor(private val global: Global) : Variable 
             val `object` = JsonObject()
             `object`.addProperty("source", NAME)
             `object`.addProperty("value", p0.global.name)
+            p0.global.serialise(`object`)
             `object`
         }
 

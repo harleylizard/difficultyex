@@ -6,11 +6,9 @@ import com.google.gson.JsonSerializationContext
 import com.harleylizard.difficultyex.common.config.Serialiser
 import com.harleylizard.difficultyex.common.config.variable.AttributeVariable.Companion.variable
 import com.harleylizard.difficultyex.common.config.variable.ConstantVariable.Companion.variable
-import com.harleylizard.difficultyex.common.config.variable.Global.Companion.global
 import com.harleylizard.difficultyex.common.config.variable.GlobalVariable.Companion.variable
-import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.ai.attributes.Attribute
 import java.lang.reflect.Type
 
 sealed interface Variable {
@@ -20,15 +18,18 @@ sealed interface Variable {
     companion object {
 
         val serialiser = object : Serialiser<Variable> {
-            override fun deserialize(p0: JsonElement, p1: Type, p2: JsonDeserializationContext?): Variable {
+            override fun deserialize(p0: JsonElement, p1: Type, p2: JsonDeserializationContext): Variable {
                 val `object` = p0.asJsonObject
                 val source = `object`.getAsJsonPrimitive("source").asString
                 val value = `object`.getAsJsonPrimitive("value")
 
                 return when (source) {
                     ConstantVariable.NAME -> value.asDouble.variable
-                    AttributeVariable.NAME -> (BuiltInRegistries.ATTRIBUTE.get(ResourceLocation(value.asString)) ?: throw RuntimeException("Unknown attribute")).variable
-                    GlobalVariable.NAME -> value.asString.global.variable
+                    AttributeVariable.NAME -> {
+                        val attribute = p2.deserialize<Attribute>(value, Attribute::class.java)
+                        attribute.variable
+                    }
+                    GlobalVariable.NAME -> Global.get(value.asString, `object`).variable
                     else -> throw RuntimeException("")
                 }
             }

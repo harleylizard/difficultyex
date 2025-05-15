@@ -57,14 +57,11 @@ class DifficultyExLevelConfig(
 
         private val defaultConfig get() = DifficultyExLevelConfig(
             Filter.empty,
-            Filter.filterOf(DifficultyExEntityTags.passive),
+            Filter.empty,
             Variables.variablesOf(
                 "level" to 5.0.variable,
                 "spawn_distance" to DistanceSpawn.instance.variable,
-                "player_distance" to PlayerAverage.instance.variable,
-                "max_health" to Attributes.MAX_HEALTH.variable,
-                "armor" to Attributes.ARMOR.variable,
-                "armor_toughness" to Attributes.ARMOR_TOUGHNESS.variable
+                "player_average" to PlayerAverage.averageOf(8.0).variable
             ),
             (1 .. 100).levelerOf("level + ((spawn_distance / 2500) * 100)"),
             Levelers.levelsOf(EntityType.ZOMBIE.levelerOf(1 .. 50, "level + 10 + ((spawn_distance / 3000) * 100)"))
